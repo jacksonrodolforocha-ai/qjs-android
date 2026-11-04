@@ -17,8 +17,8 @@ jobs:
             cmake -S qjs-src -B build-$ABI \
               -DCMAKE_TOOLCHAIN_FILE="$NDK/build/cmake/android.toolchain.cmake" \
               -DANDROID_ABI=$ABI -DANDROID_PLATFORM=android-24 \
-              -DCMAKE_BUILD_TYPE=Release
-            cmake --build build-$ABI --target qjs -j
+              -DCMAKE_BUILD_TYPE=Release -DQJS_BUILD_LIBC=ON
+            cmake --build build-$ABI --target qjs_exe -j
             mkdir -p out/jniLibs/$ABI
             cp build-$ABI/qjs out/jniLibs/$ABI/libqjs.so
             "$NDK"/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip out/jniLibs/$ABI/libqjs.so || true
